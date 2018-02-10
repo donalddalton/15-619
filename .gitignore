@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+build/
+develop-eggs/
+dist/
+eggs/
+.eggs/
+*.egg-info/
+.installed.cfg
+*.egg
+*.backup
+*.tfstate
+*.xml
