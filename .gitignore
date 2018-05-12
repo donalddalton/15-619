@@ -13,3 +13,4 @@ eggs/
 *.backup
 *.tfstate
 *.xml
+*.iml

@@ -1,0 +1,62 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: backend-deployment
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+      namespace:
+    spec:
+      containers:
+        - name: backend
+          image: backendplaygroundregistry.azurecr.io/backend:latest
+          ports:
+          - containerPort: 6000
+          resources:
+            requests:
+              cpu: "250m"
+            limits:
+              cpu: "500m"
+      imagePullSecrets:
+        - name: secretkey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  labels:
+    app: backend
+spec:
+  selector:
+    app: backend
+  ports:
+  - port: 80
+    targetPort: 6000
+  type: LoadBalancer
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: backend-deployment
+  namespace: default
+spec:
+  maxReplicas: 10
+  metrics:
+  - resource:
+      name: cpu
+      targetAverageUtilization: 50
+    type: Resource
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: backend-deployment

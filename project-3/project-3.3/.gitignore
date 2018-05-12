@@ -1,0 +1,10 @@
+.idea/*
+DataProducer/.idea/*
+DriverMatch/.idea/*
+
+DataProducer/*.iml
+DriverMatch/*.iml
+
+DataProducer/target/*
+DriverMatch/target/*
+
